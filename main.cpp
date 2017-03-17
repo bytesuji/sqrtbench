@@ -27,7 +27,6 @@ static double runTest(GtkWidget *widget, run_data_container *data)
    gtk_label_set_text(GTK_LABEL(data->label), new_label);
    gtk_button_set_label(GTK_BUTTON(widget), "Rerun");
 
-
    return 0;
 }
 
