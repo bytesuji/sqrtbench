@@ -1,7 +1,6 @@
 #include <gtk/gtk.h>
 #include <cmath>
 #include <cstdlib>
-#include <boost/timer/timer.hpp>
 #include <iostream>
 #include <time.h>
 
