@@ -7,11 +7,18 @@
 
 using namespace std;
 
+const double PERCENTILE_MARK = 50.8474576;
+
 struct run_data_container
 {
    GObject *label;
    GObject *progress;
 };
+
+int percentileScore(float secs)
+{
+   return round(PERCENTILE_MARK * secs);
+}
 
 static double runTest(GtkWidget *widget, run_data_container *data)
 {
@@ -21,9 +28,15 @@ static double runTest(GtkWidget *widget, run_data_container *data)
    clock_t end = clock();
    float seconds = (float)(end - start) / CLOCKS_PER_SEC;
 
+   /*
    string s_seconds = to_string(seconds);
    string tmp_label = "Finished in " + s_seconds + " seconds.";
    const char *new_label = tmp_label.c_str();
+   */
+   string percentile = to_string(percentileScore(seconds));
+   string tmp_label = "Your CPU scores in the " + percentile + " percentile.";
+   const char *new_label = tmp_label.c_str();
+
    gtk_label_set_text(GTK_LABEL(data->label), new_label);
    gtk_button_set_label(GTK_BUTTON(widget), "Rerun");
 
