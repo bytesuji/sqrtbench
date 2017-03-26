@@ -7,7 +7,7 @@
 
 using namespace std;
 
-const double PERCENTILE_MARK = 50.8474576;
+const float PERCENTILE_MARK = 70.8;
 
 struct run_data_container
 {
@@ -17,7 +17,7 @@ struct run_data_container
 
 int percentileScore(float secs)
 {
-   return round(PERCENTILE_MARK * secs);
+   return round(PERCENTILE_MARK / secs);
 }
 
 static double runTest(GtkWidget *widget, run_data_container *data)
@@ -28,13 +28,16 @@ static double runTest(GtkWidget *widget, run_data_container *data)
    clock_t end = clock();
    float seconds = (float)(end - start) / CLOCKS_PER_SEC;
 
-   /*
-   string s_seconds = to_string(seconds);
-   string tmp_label = "Finished in " + s_seconds + " seconds.";
-   const char *new_label = tmp_label.c_str();
-   */
    string percentile = to_string(percentileScore(seconds));
-   string tmp_label = "Your CPU scores in the " + percentile + " percentile.";
+   string tmp_label;
+   if(percentileScore(seconds) % 10 == 2)
+      tmp_label = "Your CPU scores in the " + percentile + "nd percentile.";
+   else if(percentileScore(seconds) % 10 == 3)
+      tmp_label = "Your CPU scores in the " + percentile + "rd percentile.";
+   else if(percentileScore(seconds) % 10 == 1)
+      tmp_label = "Your CPU scores in the " + percentile + "st percentile.";
+   else
+      tmp_label = "Your CPU scores in the " + percentile + "th percentile.";
    const char *new_label = tmp_label.c_str();
 
    gtk_label_set_text(GTK_LABEL(data->label), new_label);
